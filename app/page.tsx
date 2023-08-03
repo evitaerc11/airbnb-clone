@@ -1,11 +1,15 @@
 import getCurrentUser from './actions/getCurrentUser'
-import getListings from './actions/getListings'
+import getListings, { IListingsParams } from './actions/getListings'
 import Container from './components/Container'
 import EmptyState from './components/EmptyState'
 import ListingCard from './components/listings/ListingCard'
 
-export default async function Home() {
-  const listings = await getListings()
+interface HomeProps {
+  searchParams: IListingsParams
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const listings = await getListings(searchParams)
   const currentUser = await getCurrentUser()
 
   if (!listings.length) {
@@ -28,7 +32,11 @@ export default async function Home() {
           '
       >
         {listings.map((listing) => (
-          <ListingCard key={listing.id} data={listing} currentUser={currentUser} />
+          <ListingCard
+            key={listing.id}
+            data={listing}
+            currentUser={currentUser}
+          />
         ))}
       </div>
     </Container>
