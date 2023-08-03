@@ -10,6 +10,6 @@ export default async function getListings() {
 
     return listings
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error('Some error occured');
   }
 }
